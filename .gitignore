@@ -2,3 +2,4 @@
 .idea/*
 __pycache__/*
 Article*.pdf
+Article2/Datasets/Article2/npz_files/*
