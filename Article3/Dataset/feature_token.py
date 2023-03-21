@@ -26,3 +26,10 @@ semantic_feature_list = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', '
                          'Z0', 'Z1', 'Z2', 'Z3', 'Z4', 'Z5', 'Z6', 'Z7', 'Z8', 'Z9', 'Z99']
 
 all_features_list = structural_feature_list + semantic_feature_list
+
+
+feature_dict = {
+    "structural": structural_feature_list,
+    "semantic": semantic_feature_list,
+    "all": all_features_list
+}

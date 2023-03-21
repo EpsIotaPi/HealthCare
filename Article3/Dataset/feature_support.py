@@ -24,13 +24,13 @@ JOF_support_57 = [False, True, True, True, True, False, True, True, True, False,
                   False, False, False, False, False, False, False, True, True, False, True, False, True]
 
 
-feature_support = {
+supports_dict = {
     'JOF': JOF_support_57,
     'TOF': TOF_support_5,
     'SOF': SOF_support_14,
 }
 
-def select_feature(features, support):
+def select_features(features, support):
     new_feat = np.zeros_like(features)
     true_count = 0
     for i in range(len(support)):
