@@ -53,7 +53,7 @@ class MyDataset():
             y_all = np.concatenate([y, y_test], axis=0)
             return X_all, y_all
 
-    def export_dataset(self, csv_file, hard_mode=False):  # csv_file = =".../Article2/main.csv"
+    def export_dataset(self, csv_file, hard_mode=False, weight_level="word", normalize=True):  # csv_file = =".../Article2/main.csv"
 
         if not hard_mode:
             if os.path.exists(self.train_dir) or os.path.exists(self.test_dir):
@@ -75,7 +75,7 @@ class MyDataset():
         for idx in tqdm(range(data_length)):
             label = csv_data["Label (1=Mistake present, 0= No mistake)"][idx]
             text = csv_data["Text"][idx]
-            feature = feature_dealer.get_feature(text, weight_level="word", normalize=True)
+            feature = feature_dealer.get_feature(text, weight_level=weight_level, normalize=normalize)
 
             r_int = random.randint(0, 1)
             if r_int == 0:

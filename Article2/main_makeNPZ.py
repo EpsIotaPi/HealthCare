@@ -5,7 +5,7 @@ npz_dir = "/Users/jinchenji/Developer/Datasets/healthcare/Article2/npz_files"
 csv_path = "/Users/jinchenji/Developer/Datasets/healthcare/Article2/main.csv"
 
 dataset = MyDataset(npz_dir)
-dataset.export_dataset(csv_path, hard_mode=False)
+dataset.export_dataset(csv_path, hard_mode=False, weight_level="word", normalize=True)
 
 
 

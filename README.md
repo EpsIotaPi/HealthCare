@@ -22,7 +22,25 @@ pip install -r requirements.txt
 
 
 
+### Usage
 
+```shell
+# to generate a dataset in npz format
+  # change npz_dir to the directory save npz file
+  # change csv_path to the csv file's path
+python main_makeNPZ.py
+
+# run the main code to calculate the results
+  # change npz_dir to the directory save npz file
+  # change other parameters for different experiments
+python main.py
+
+# using recursive feature elimination (RFE) for automatic feature optimisation. 
+  # change npz_dir to the directory save npz file
+  # change other parameters for different experiments
+  # TODO: there is difference from the results described in the paper
+python main_RFE.py
+```
 
 
 
