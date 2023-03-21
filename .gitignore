@@ -3,3 +3,4 @@
 __pycache__/*
 Article*.pdf
 Article2/Datasets/Article2/npz_files/*
+Article3/Dataset/__pycache__/

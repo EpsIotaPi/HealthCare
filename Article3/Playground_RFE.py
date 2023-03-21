@@ -3,22 +3,21 @@ import os
 import numpy as np
 
 from sklearn.svm import SVC
-# from skrvm import RVC
-# from sklearn.naive_bayes import MultinomialNB as MNB
-# from sklearn.model_selection import cross_validate, cross_val_score, KFold
-# from sklearn.metrics import roc_auc_score, accuracy_score, f1_score, recall_score, balanced_accuracy_score
+
 from sklearn.feature_selection import RFE, RFECV
 from Dataset.feature_token import structural_feature_list, semantic_feature_list, all_features_list
+from sklearn.preprocessing import minmax_scale, normalize
 
 npz_dir = "/Users/jinchenji/Developer/Datasets/healthcare/Article3/npz_files"
 train_dir = "/Users/jinchenji/Developer/Datasets/healthcare/Article3/npz_files/train"
 test_dir = "/Users/jinchenji/Developer/Datasets/healthcare/Article3/npz_files/test"
 
 
-featrue = "structural"  # structural (20), semantic (115), all (135)
+featrue = "semantic"  # structural (20), semantic (115), all (135)
 select_set = "both"  # train, test, both
 cross_validate = True
 print_support = False
+norm_method = "nope"  # minmax, l2, nope
 
 
 structural_X = np.zeros([129, 20])
@@ -46,36 +45,51 @@ for idx, fn in enumerate(test_list):
 
 
 print("use feature:", featrue)
+X, X_test, feature_list = None, None, None
 if featrue == "structural":
-    X = structural_X
-    X_test = structural_X_test
-    feature_list = structural_feature_list
+    X = structural_X.copy()
+    X_test = structural_X_test.copy()
+    feature_list = structural_feature_list.copy()
 elif featrue == "semantic":
-    X = semantic_X
-    X_test = semantic_X_test
-    feature_list = semantic_feature_list
+    X = semantic_X.copy()
+    X_test = semantic_X_test.copy()
+    feature_list = semantic_feature_list.copy()
 elif featrue == "all":
     X = np.concatenate([structural_X, semantic_X], axis=1)
     X_test = np.concatenate([structural_X_test, semantic_X_test], axis=1)
-    feature_list = all_features_list
+    feature_list = all_features_list.copy()
 
 print("use set    :", select_set)
 if select_set == "test":
-    X = X_test
-    y = y_test
+    X = X_test.copy()
+    y = y_test.copy()
 elif select_set == "all":
     X = np.concatenate([X, X_test], axis=0)
     y = np.concatenate([y, y_test], axis=0)
 
-print(X.shape)
-print("-" * 30)
 
 estimator = SVC(kernel="linear")
 
+print("use normalize:", norm_method)
+if norm_method == "minmax":
+    X = minmax_scale(X)
+    X_test = minmax_scale(X_test)
+    y = minmax_scale(y)
+    y_test = minmax_scale(y_test)
+elif norm_method == "l2":
+    X = normalize(X, norm='l2')
+    X_test = normalize(X_test, norm='l2')
+    y = normalize(y, norm='l2')
+    y_test = normalize(y_test, norm='l2')
+
+print("use cross val:", cross_validate)
+print(X.shape)
+print("-" * 30)
+
 if cross_validate:
-    selector = RFECV(estimator).fit(X, y)
+    selector = RFECV(estimator, cv=5).fit(X, y)
 else:
-    selector = RFE(estimator, n_features_to_select=14).fit(X, y)
+    selector = RFE(estimator, n_features_to_select=5).fit(X, y)
 
 
 feature_support = []
