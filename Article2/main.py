@@ -11,7 +11,7 @@ from sklearn.preprocessing import minmax_scale, normalize, StandardScaler
 from Dataset import MyDataset
 
 npz_dir = "/Users/jinchenji/Developer/Datasets/healthcare/Article2/npz_files"
-featrue = "usua"   # usua (115),
+featrue = "usas"   # usas (115),
 # use_support = True      # TOF for structural (5), SOF for semantic (14), JOF for all (57)
 
 norm_method = "none"    # none, MMN(maxmin), L2N(l2), ZSN

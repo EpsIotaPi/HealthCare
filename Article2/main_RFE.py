@@ -7,7 +7,7 @@ from Dataset.feature_tokens import feature_dict
 
 npz_dir = "/Users/jinchenji/Developer/Datasets/healthcare/Article2/npz_files"
 
-featrue = "usua"  # usua (115)
+featrue = "usas"  # usas (115)
 select_set = "all"      # train, test, all
 norm_method = "none"    # none, minmax, l2
 cross_val = False

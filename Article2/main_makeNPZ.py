@@ -15,7 +15,7 @@ dataset.export_dataset(csv_path, hard_mode=False, weight_level="word", normalize
 #
 # import numpy as np
 # import pandas as pd
-# from usua_features import get_usas_feature, feature_filter
+# from usas_features import get_usas_feature, feature_filter
 # from tqdm import tqdm
 #
 # dataset_path = "/Users/jinchenji/Developer/Datasets/healthcare/Article2/main.csv"

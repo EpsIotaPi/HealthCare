@@ -17,7 +17,7 @@
 
 # structural_feature_list = complex_sentences_6 + lexical_complexity_3 + morph_ortho_complexity_8 + content_density_3
 
-usua_feature_list = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', 'A10', 'A11', 'A12', 'A13', 'A14', 'A15',
+usas_feature_list = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', 'A10', 'A11', 'A12', 'A13', 'A14', 'A15',
                      'B1', 'B2', 'B3', 'B4', 'B5', 'C1', 'E1', 'E2', 'E3', 'E4', 'E5', 'E6', 'F1', 'F2', 'F3', 'F4',
                      'G1', 'G2', 'G3', 'H1', 'H2', 'H3', 'H4', 'H5', 'I1', 'I2', 'I3', 'I4',
                      'K1', 'K2', 'K3', 'K4', 'K5', 'K6', 'L1', 'L2', 'L3', 'M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M7', 'M8',
@@ -26,9 +26,9 @@ usua_feature_list = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', 'A10'
                      'W1', 'W2', 'W3', 'W4', 'W5', 'X1', 'X2', 'X3', 'X4', 'X5', 'X6', 'X7', 'X8', 'X9',  'Y1', 'Y2',
                      'Z0', 'Z1', 'Z2', 'Z3', 'Z4', 'Z5', 'Z6', 'Z7', 'Z8', 'Z9', 'Z99']
 
-# all_features_list = structural_feature_list + usua_feature_list
+# all_features_list = structural_feature_list + usas_feature_list
 
 
 feature_dict = {
-    "usua": usua_feature_list,
+    "usas": usas_feature_list,
 }

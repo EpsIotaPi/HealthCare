@@ -2,7 +2,7 @@ import os, random
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
-from .usua_features import FeatureUSUA
+from .usas_features import FeatureUSAS
 from sklearn.preprocessing import minmax_scale, normalize
 
 class MyDataset():
@@ -34,7 +34,7 @@ class MyDataset():
 
         return X, y, X_test, y_test
 
-    def load_set(self,  use_set="train", use_featrue="usua", norm_method="none"):
+    def load_set(self,  use_set="train", use_featrue="usas", norm_method="none"):
         X, y, X_test, y_test = self.train_test_set(use_featrue=use_featrue)
 
         if norm_method == "minmax":
@@ -70,7 +70,7 @@ class MyDataset():
         csv_data = pd.read_csv(csv_file)
         data_length = len(csv_data)
 
-        feature_dealer = FeatureUSUA()
+        feature_dealer = FeatureUSAS()
 
         for idx in tqdm(range(data_length)):
             label = csv_data["Label (1=Mistake present, 0= No mistake)"][idx]
