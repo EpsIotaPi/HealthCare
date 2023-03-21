@@ -1,17 +1,26 @@
 
-import os
+import os, random
 import numpy as np
+import pandas as pd
+from tqdm import tqdm
 from sklearn.preprocessing import minmax_scale, normalize
 
+from .feature_token import structural_feature_list, semantic_feature_list
 from .feature_support import select_features, supports_dict
+
+
 
 class MyDataset():
     def __init__(self, npz_dir):
         self.npz_dir = npz_dir
         self.train_dir = os.path.join(npz_dir, "train")
         self.test_dir = os.path.join(npz_dir, "test")
-        self.train_sample_num = 129  # len(os.listdir(self.train_dir))
-        self.test_sample_num = 56    # len(os.listdir(self.test_dir))
+
+        # Set the number of negative/positive samples in the train/test dataset. According to the paper.
+        self.train_neg, self.train_pos = 76, 53
+        self.test_neg, self.test_pos = 34, 22
+        self.train_sample_num = self.train_pos + self.train_neg  # len(os.listdir(self.train_dir))
+        self.test_sample_num = self.test_pos + self.test_neg    # len(os.listdir(self.test_dir))
 
     def train_test_set(self, use_featrue="structural", use_support=False):
         structural_X = np.zeros([self.train_sample_num, 20])
@@ -70,3 +79,58 @@ class MyDataset():
             y_all = np.concatenate([y, y_test], axis=0)
             return X_all, y_all
 
+    def export_dataset(self, csv_file, hard_mode=False):  # csv_file = =".../Article3/Data.csv"
+
+        if not hard_mode:
+            if os.path.exists(self.train_dir) or os.path.exists(self.test_dir):
+                print("Dataset Dir Already Exist")
+                print("Please Check {} and {}".format(self.train_dir, self.test_dir))
+                return
+
+        os.makedirs(self.train_dir, exist_ok=hard_mode)
+        os.makedirs(self.test_dir, exist_ok=hard_mode)
+
+        train_sample_count = [self.train_neg, self.train_pos]
+        test_sample_count = [self.test_neg, self.test_pos]
+
+        csv_data = pd.read_csv(csv_file)
+        data_length = len(csv_data)
+
+        for idx in tqdm(range(data_length)):
+            label = csv_data["Symptom Mistakes"][idx]
+            sample_label = 1
+            if np.isnan(label):
+                label = 0.0
+                sample_label = 0
+            structural_feature = np.zeros(len(structural_feature_list))
+            for i, token in enumerate(structural_feature_list):
+                structural_feature[i] = csv_data[token][idx]
+
+            semantic_feature = np.zeros(len(semantic_feature_list))
+            for i, token in enumerate(semantic_feature_list):
+                semantic_feature[i] = csv_data[token][idx]
+
+            r_int = random.randint(0, 1)
+            if r_int == 0:
+                if train_sample_count[sample_label] > 0:
+                    save_dir = self.train_dir
+                    train_sample_count[sample_label] -= 1
+                else:
+                    save_dir = self.test_dir
+                    test_sample_count[sample_label] -= 1
+            elif r_int == 1:
+                if test_sample_count[sample_label] > 0:
+                    save_dir = self.test_dir
+                    test_sample_count[sample_label] -= 1
+                else:
+                    save_dir = self.train_dir
+                    train_sample_count[sample_label] -= 1
+            if train_sample_count[sample_label] < 0 or test_sample_count[sample_label] < 0:
+                print(train_sample_count, test_sample_count)
+                print("The count of dataset sample have error")
+                return
+
+            np.savez(os.path.join(save_dir, "{}.npz".format(idx)),
+                     structural_feature=structural_feature,
+                     semantic_feature=semantic_feature,
+                     label=label)
