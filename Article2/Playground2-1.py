@@ -35,7 +35,7 @@
 # # embedding = {"a": 1, "b": 12}
 # # print(len(embedding))
 
-from Article2.Datasets import get_usas_feature
+from Article2.Dataset import get_usas_feature
 import pandas as pd
 nlp = get_usas_feature()
 
