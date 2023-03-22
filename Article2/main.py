@@ -12,17 +12,17 @@ from Dataset import MyDataset
 
 npz_dir = "/Users/jinchenji/Developer/Datasets/healthcare/Article2/npz_files"
 featrue = "usas"   # usas (115),
-# use_support = True      # TOF for structural (5), SOF for semantic (14), JOF for all (57)
+use_support = True      # usas_5
 
-norm_method = "none"    # none, MMN(maxmin), L2N(l2), ZSN
-cross_val = True       # use cross validation or not
+norm_method = "ZSN"    # none, MMN(maxmin), L2N(l2), ZSN
+cross_val = False       # use cross validation or not
 
 dataset = MyDataset(npz_dir)
-X, y, X_test, y_test = dataset.train_test_set(use_featrue=featrue)   # use_support=use_support)
+X, y, X_test, y_test = dataset.train_test_set(use_featrue=featrue, use_support=use_support)
 
 
 print("use feature:", featrue)
-# print("use support:", use_support)
+print("use support:", use_support)
 print(X.shape)
 
 clf = RVC(kernel="rbf", gamma="scale")
@@ -68,6 +68,6 @@ else:
 
     print("AUC         :", auc)
     print("Accuracy    :", accuracy)
-    print("F-Score     :", f1)
+    # print("F-Score     :", f1)
     print("Sensitivity :", sensitivity)
     print("Specificity :", specificity)

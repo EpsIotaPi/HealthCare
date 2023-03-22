@@ -2,7 +2,7 @@
 import spacy
 import numpy as np
 
-from .feature_tokens import usas_feature_list
+from .feature_token import usas_feature_list
 
 
 class FeatureUSAS():

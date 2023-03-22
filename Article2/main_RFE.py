@@ -3,7 +3,7 @@ from sklearn.svm import SVC
 from sklearn.feature_selection import RFE, RFECV
 
 from Dataset import MyDataset
-from Dataset.feature_tokens import feature_dict
+from Dataset.feature_token import feature_dict
 
 npz_dir = "/Users/jinchenji/Developer/Datasets/healthcare/Article2/npz_files"
 

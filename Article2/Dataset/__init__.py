@@ -2,8 +2,10 @@ import os, random
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
-from .usas_features import FeatureUSAS
 from sklearn.preprocessing import minmax_scale, normalize
+
+from .usas_features import FeatureUSAS
+from .feature_support import select_features, supports_dict
 
 class MyDataset():
     def __init__(self, npz_dir):
@@ -31,6 +33,10 @@ class MyDataset():
             npz_sample = np.load(os.path.join(self.test_dir, fn))
             X_test[idx] = npz_sample["embedding"]
             y_test[idx] = npz_sample["label"]
+
+        if use_support:
+            X = select_features(X, support=supports_dict["usas"])
+            X_test = select_features(X_test, support=supports_dict["usas"])
 
         return X, y, X_test, y_test
 
