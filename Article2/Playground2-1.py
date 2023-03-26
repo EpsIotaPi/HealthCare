@@ -1,4 +1,17 @@
 
+import spacy
+
+
+
+nlp = spacy.load('en_core_web_sm', exclude=['parser', 'ner'])
+english_tagger_pipeline = spacy.load('en_dual_none_contextual')
+nlp.add_pipe('pymusas_rule_based_tagger', source=english_tagger_pipeline)
+
+doc = nlp("The Nile is a major north-flowing river in Northeastern Africa.")
+for word in doc:
+    print(word._.pymusas_tags)
+
+
 # from yellowbrick.text import DispersionPlot, dispersion
 # from yellowbrick.datasets import load_hobbies
 #
@@ -35,27 +48,27 @@
 # # embedding = {"a": 1, "b": 12}
 # # print(len(embedding))
 
-from Article2.Dataset import get_usas_feature
-import pandas as pd
-nlp = get_usas_feature()
-
-
-dataset_path = "/Users/jinchenji/Developer/Datasets/healthcare/Article2/main.csv"
-save_dir = "/Users/jinchenji/Developer/Datasets/healthcare/Article2/npz_files/train"
-
-csv_data = pd.read_csv(dataset_path)
-data_length = len(csv_data)
-
-
-for idx in range(data_length):
-    label = csv_data["Label (1=Mistake present, 0= No mistake)"][idx]
-    text = csv_data["Text"][idx]
-    doc = nlp(text)
-    vec = doc[0]._.pymusas_tags
-    print(vec)
-    break
-    # for i, word in enumerate(doc):
-    #     tokens = []
-    #     print(word._.pymusas_tags)
-    #
-    # break
+# from Article2.Dataset import get_usas_feature
+# import pandas as pd
+# nlp = get_usas_feature()
+#
+#
+# dataset_path = "/Users/jinchenji/Developer/Datasets/healthcare/Article2/main.csv"
+# save_dir = "/Users/jinchenji/Developer/Datasets/healthcare/Article2/npz_files/train"
+#
+# csv_data = pd.read_csv(dataset_path)
+# data_length = len(csv_data)
+#
+#
+# for idx in range(data_length):
+#     label = csv_data["Label (1=Mistake present, 0= No mistake)"][idx]
+#     text = csv_data["Text"][idx]
+#     doc = nlp(text)
+#     vec = doc[0]._.pymusas_tags
+#     print(vec)
+#     break
+#     # for i, word in enumerate(doc):
+#     #     tokens = []
+#     #     print(word._.pymusas_tags)
+#     #
+#     # break

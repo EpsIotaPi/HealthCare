@@ -10,11 +10,11 @@ npz_dir = "/Users/jinchenji/Developer/Datasets/healthcare/Article3/npz_files"
 featrue = "structural"  # structural (20), semantic (115), all (135)
 select_set = "all"      # train, test, all
 norm_method = "none"    # none, minmax, l2
-cross_val = True
+cross_val = False
 print_support = False
 
 cv = 5                    #  only effect when cross_val=True
-n_features_to_select = 5  #  only effect when cross_val=False
+n_features_to_select = 14  #  only effect when cross_val=False
 
 
 print("use set      :", select_set)
